@@ -1,0 +1,9 @@
+# Jetbrains files
+.idea/*
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
