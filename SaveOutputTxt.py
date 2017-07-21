@@ -4,10 +4,6 @@ def writeToTxt(A):
         if A[i][0] != 0:
             B.append(A[i])
 
-    for i in range(len(B)):
-        if B[i][3] == "NCH":
-            B[i] = (B[i] + ["None"])
-
     # find unique MS names
     output_f_names = []
     for i in range(len(B)):
