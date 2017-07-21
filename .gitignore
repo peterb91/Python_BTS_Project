@@ -7,3 +7,7 @@
 env/
 venv/
 ENV/
+
+*.pyc
+__pycache__
+*.egg-info
