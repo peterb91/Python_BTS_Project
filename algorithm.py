@@ -2,15 +2,7 @@ from data_generator import random_data
 from input import read_file
 from SaveOutputTxt import writeToTxt
 
-'''data = [["DL", "S0", "MS776", -78, 1],\
- ["DL", "S0", "MS776", -82, 1],\
- ["DL", "S0", "MS776", -87, 1],\
- ["DL", "S0", "MS776", -85, 1],\
- ["UL", "S0", "MS222", -70, 1],\
- ["DL", "N1", "MS222", -65, None],\
- ["UL", "S0", "MS455", -999, 3]]'''
-
-random_data(200)
+random_data(20000)
 data = read_file()
 
 outputData = []
@@ -88,15 +80,11 @@ def power_management():
                         outputData.append([i[0], i[1], i[2], "NCH", None])
                 else:
                     outputData.append([i[0], i[1], i[2], "NCH", None])
-
             else:
                 terminals[i[0] + i[2]] = [i[3]]
                 outputData.append([i[0], i[1], i[2], "NCH", None])
             lastWorked[i[0] + i[2]] = i[3]
-
     return outputData
 
 power_management()
-
 writeToTxt(outputData)
-#print(outputData)
