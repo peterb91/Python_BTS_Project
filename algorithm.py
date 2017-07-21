@@ -1,5 +1,7 @@
 from data_generator import random_data
 from input import read_file
+from SaveOutputToTxt import writeToTxt
+
 '''data = [["DL", "S0", "MS776", -78, 1],\
  ["DL", "S0", "MS776", -82, 1],\
  ["DL", "S0", "MS776", -87, 1],\
@@ -8,17 +10,19 @@ from input import read_file
  ["DL", "N1", "MS222", -65, None],\
  ["UL", "S0", "MS455", -999, 3]]'''
 
-random_data(200)
+random_data(20000)
 data = read_file()
 
 outputData = []
 terminals = {}
+missings = {}
 
 target = -75
 hysteresis = 3
 maxInc = 8
 maxDec = 4
 values = 2
+missing = 3
 index = 0
 
 
@@ -32,9 +36,14 @@ def avg(numbers):
         mul /= 2
     return int(target - (up/down))
 
+
 def power_management():
     for i in data:
-        if(i[0] not in["UL", "DL"] or i[1] not in ["S0", "N1", "N2", "N3", "N4", "N5", "N6"] or i[3] < -95 or i[3] > -45\
+        if i[3] == "missing":
+            if i[0] in ["UL", "DL"] and i[1] == "S0" and i[4] is None:
+                if missings[i[2]] <= missing:
+                    print()
+        elif(i[0] not in["UL", "DL"] or i[1] not in ["S0", "N1", "N2", "N3", "N4", "N5", "N6"] or i[3] < -95 or i[3] > -45\
                or i[4] not in [0, 1, 2, 3, 4, 5]):
             outputData.append([0])
         elif i[1] == "S0":
@@ -73,4 +82,5 @@ def power_management():
                 outputData.append([i[0], i[1], i[2], "NCH"])
 
 power_management()
-print(outputData)
+writeToTxt(outputData)
+#print(outputData)
