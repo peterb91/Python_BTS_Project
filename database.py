@@ -3,6 +3,7 @@ import datetime
 
 
 class DatabaseArchiver:
+    """Creates database and handles inserting data into the database."""
     M_DIRECTION = 0
     M_CELL = 1
     M_MOBILE_STATION = 2
@@ -21,6 +22,7 @@ class DatabaseArchiver:
         self.create_schema()
 
     def create_schema(self):
+        """Creates schema if not created before."""
         if self.create_schema_needed():
             c = self.connection.cursor()
             c.execute(
@@ -48,6 +50,7 @@ class DatabaseArchiver:
             self.connection.commit()
 
     def create_schema_needed(self):
+        """Checks if the schema already exists."""
         c = self.connection.cursor()
         try:
             c.execute('''SELECT * FROM measurements LIMIT 1;''')
@@ -55,36 +58,40 @@ class DatabaseArchiver:
             return True
         return False
 
-    def save_measurement(self, measurement):
-        try:
-            timestamp = measurement[self.M_TIME_STAMP]
-        except IndexError:
-            timestamp = datetime.datetime.now()
-        c = self.connection.cursor()
-        c.execute(
-            '''INSERT INTO measurements(direction, cell, mobile_station,
-                signal_strength, signal_quality, time_stamp) VALUES (?, ?, ?, ?, ?, ?);''',
-            (measurement[self.M_DIRECTION], measurement[self.M_CELL],
-             measurement[self.M_MOBILE_STATION], measurement[self.M_SIGNAL_STRENGTH],
-             measurement[self.M_SIGNAL_QUALITY], timestamp
-             )
-        )
+    def save_measurement(self, measurements):
+        """Saves measurements into the database."""
+        for measurement in measurements:
+            try:
+                timestamp = measurement[self.M_TIME_STAMP]
+            except IndexError:
+                timestamp = datetime.datetime.now()
+            c = self.connection.cursor()
+            c.execute(
+                '''INSERT INTO measurements(direction, cell, mobile_station,
+                    signal_strength, signal_quality, time_stamp) VALUES (?, ?, ?, ?, ?, ?);''',
+                (measurement[self.M_DIRECTION], measurement[self.M_CELL],
+                 measurement[self.M_MOBILE_STATION], measurement[self.M_SIGNAL_STRENGTH],
+                 measurement[self.M_SIGNAL_QUALITY], timestamp
+                 )
+            )
         self.connection.commit()
 
-    def save_response(self, response):
-        try:
-            timestamp = response[self.R_TIME_STAMP]
-        except IndexError:
-            timestamp = datetime.datetime.now()
-        c = self.connection.cursor()
-        c.execute(
-            '''INSERT INTO measurements(direction, cell, mobile_station,
-                command, step, time_stamp) VALUES (?, ?, ?, ?, ?, ?);''',
-            (response[self.R_DIRECTION], response[self.R_CELL],
-             response[self.R_MOBILE_STATION], response[self.R_COMMAND],
-             response[self.R_STEP], timestamp
-             )
-        )
+    def save_response(self, responses):
+        """Saves calculated response into the database."""
+        for response in responses:
+            try:
+                timestamp = response[self.R_TIME_STAMP]
+            except IndexError:
+                timestamp = datetime.datetime.now()
+            c = self.connection.cursor()
+            c.execute(
+                '''INSERT INTO measurements(direction, cell, mobile_station,
+                    command, step, time_stamp) VALUES (?, ?, ?, ?, ?, ?);''',
+                (response[self.R_DIRECTION], response[self.R_CELL],
+                 response[self.R_MOBILE_STATION], response[self.R_COMMAND],
+                 response[self.R_STEP], timestamp
+                 )
+            )
         self.connection.commit()
 
 # archiver = DatabaseArchiver('/tmp/DB.db')
