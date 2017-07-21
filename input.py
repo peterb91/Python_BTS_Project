@@ -21,7 +21,7 @@ def read_file():
                 l[4] = int(l[4])
             elif l[3] == 1000:
                 l.append("None")
-        data.append(l)
+            data.append(l)
     return data
 
 read_file()
