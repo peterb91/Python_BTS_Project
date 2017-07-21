@@ -12,7 +12,6 @@ from SaveOutputTxt import writeToTxt
 
 random_data(200)
 data = read_file()
-print(data)
 
 outputData = []
 terminals = {}
@@ -98,7 +97,6 @@ def power_management():
     return outputData
 
 power_management()
-print(outputData)
 
 writeToTxt(outputData)
 #print(outputData)
