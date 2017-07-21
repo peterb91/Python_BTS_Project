@@ -1,5 +1,5 @@
 
-def readFile():
+def read_file():
 
     sep = " "
     data = []
@@ -18,12 +18,12 @@ def readFile():
                 l[4] = int(l[4])
             elif l[3] in 'missing':
                 l.append('None')
-            print(l)
+            #print(l)
             data.append(l)
         #else:
             #l = [incorrect, incorrect, incorrect, incorrect, incorrect]
             #data.append(l)'''
+    return data
+    #print(data)
 
-    print(data)
-
-readFile()
+read_file()
