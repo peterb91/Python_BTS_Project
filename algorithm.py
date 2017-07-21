@@ -1,6 +1,6 @@
 from data_generator import random_data
 from input import read_file
-from SaveOutputToTxt import writeToTxt
+from SaveOutputTxt import writeToTxt
 
 '''data = [["DL", "S0", "MS776", -78, 1],\
  ["DL", "S0", "MS776", -82, 1],\
