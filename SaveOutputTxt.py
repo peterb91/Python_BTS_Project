@@ -5,8 +5,10 @@ def writeToTxt(A):
         A[i] = ([timestamp]+A[i])
         if A[i][1] != 0:
             B.append(A[i])
-   # print(A)
-   # print(B)
+
+    for i in range(len(B)):
+        if B[i][4] == "NCH":
+            B[i] = (B[i] + ["None"])
 
     # find unique MS names
     output_f_names = []
