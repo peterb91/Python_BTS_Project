@@ -45,14 +45,21 @@ def power_management():
         if i[3] == 1000:
             missed = True
             if i[0] in ["UL", "DL"] and i[1] == "S0" and i[4] is None:
-                if missings[i[0] + i[2]] <= missing:
+                if i[0] + i[2] not in missings:
+                    missings[i[0] + i[2]] = 1
+                elif missings[i[0] + i[2]] <= missing:
                     missings[i[0] + i[2]] += 1
-                    #TODO
+                    i[3] = lastWorked[i[0] + i[2]]
+                    i[4] = 5
+                else:
+                    i[3] = -95
+                    i[4] = 5
         if(i[0] not in["UL", "DL"] or i[1] not in ["S0", "N1", "N2", "N3", "N4", "N5", "N6"] or i[3] < -95 or i[3] > -45\
                or i[4] not in [0, 1, 2, 3, 4, 5]):
             outputData.append([0])
         elif i[1] == "S0":
-            missings[i[0] + i[2]] = 0
+            if not missed:
+                missings[i[0] + i[2]] = 0
             if i[0] + i[2] in terminals:
                 terminals[i[0] + i[2]].append(i[3])
                 if len(terminals[i[0] + i[2]]) >= values:
@@ -86,7 +93,7 @@ def power_management():
             else:
                 terminals[i[0] + i[2]] = [i[3]]
                 outputData.append([i[0], i[1], i[2], "NCH", None])
-            lastWorked[i[0] + i[2]] = i
+            lastWorked[i[0] + i[2]] = i[3]
 
 power_management()
 print(outputData)
