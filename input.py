@@ -26,8 +26,5 @@ def read_file():
         data.append(l)
     return data
     print(data)
-    archiver = database.DatabaseArchiver('/tmp/BTStest.db')
-    archiver.save_measurement(data)
-    return data
 
 read_file()
