@@ -3,7 +3,7 @@ import random
 def random_data (amount):
     with open("dataset.txt", "w+") as file:
         for i in range(amount):
-            links = ["UL", "UL", "UL", "UL", "DL", "DL", "DL" "DL", "SL"]
+            links = ["UL", "UL", "UL", "UL", "DL", "DL", "DL", "DL", "SL"]
             col1 = random.choice(links)
             terminals = ["S0", "S0", "S0", "S0", "S0", "S0", "S0", "N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "S1"]
             col2 = random.choice(terminals)
