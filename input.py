@@ -1,8 +1,7 @@
 #import sys
-import database
+
 
 def read_file():
-
     sep = " "
     data = []
 
@@ -22,9 +21,7 @@ def read_file():
                 l[4] = int(l[4])
             elif l[3] == 1000:
                 l.append("None")
-        print(l)
         data.append(l)
     return data
-    print(data)
 
 read_file()

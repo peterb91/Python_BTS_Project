@@ -12,6 +12,7 @@ from SaveOutputTxt import writeToTxt
 
 random_data(200)
 data = read_file()
+print(data)
 
 outputData = []
 terminals = {}

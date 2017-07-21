@@ -12,7 +12,7 @@ def random_data (amount):
             strength = [i for i in range(-99, -95, 2)] + [i for i in range(-95, -45, 1)] + [i for i in range(-45, -10, 8)] + ["missing"]
             col4 = random.choice(strength)
             if col2 in "S0" and str(col4) not in "missing":
-                col5 = random.randint(1,5)
+                col5 = random.randint(1, 5)
             else:
                 col5 = ""
             file.write("%s %s %s %s %s\n" %(col1, col2, col3, col4, col5))
