@@ -1,6 +1,6 @@
 import sqlite3
 import datetime
-
+from algorithm import power_management
 
 class DatabaseArchiver:
     """Creates database and handles inserting data into the database."""
@@ -94,3 +94,5 @@ class DatabaseArchiver:
             )
         self.connection.commit()
 
+archiver = DatabaseArchiver('/tmp/BTStest.db')
+archiver.save_response(power_management())
