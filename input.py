@@ -1,3 +1,5 @@
+import database
+
 
 def read_file():
 
@@ -23,7 +25,8 @@ def read_file():
         #else:
             #l = [incorrect, incorrect, incorrect, incorrect, incorrect]
             #data.append(l)'''
+    archiver = database.DatabaseArchiver('/tmp/BTStest.db')
+    archiver.save_measurement(data)
     return data
-    #print(data)
 
 read_file()

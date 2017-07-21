@@ -23,5 +23,5 @@ def writeToTxt(A):
         with open(f_name + ".txt", "w") as f:
             for i in range(len(B)):
                 if B[i][3] == f_name:
-                    f.write(" ".join(str(item) for item in B[i][1:]))
+                    f.write(" ".join(str(item) for item in B[i][0:]))
                     f.write("\n")

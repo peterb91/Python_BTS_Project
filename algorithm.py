@@ -1,6 +1,7 @@
 from data_generator import random_data
 from input import read_file
 from SaveOutputTxt import writeToTxt
+import database
 
 '''data = [["DL", "S0", "MS776", -78, 1],\
  ["DL", "S0", "MS776", -82, 1],\
@@ -63,7 +64,7 @@ def power_management():
                             elif i[4] < 2:
                                 outputData.append([i[0], i[1], i[2], "DEC", -deviation])
                             else:
-                                outputData.append([i[0], i[1], i[2], "NCH"])
+                                outputData.append([i[0], i[1], i[2], "NCH", None])
                         elif deviation > 0:
                             if abs(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
@@ -78,14 +79,20 @@ def power_management():
                         else:
                             outputData.append([i[0], i[1], i[2], "INC", 2])
                     else:
-                        outputData.append([i[0], i[1], i[2], "NCH"])
+                        outputData.append([i[0], i[1], i[2], "NCH", None])
                 else:
-                    outputData.append([i[0], i[1], i[2], "NCH"])
+                    outputData.append([i[0], i[1], i[2], "NCH", None])
 
             else:
                 terminals[i[0] + i[2]] = [i[3]]
-                outputData.append([i[0], i[1], i[2], "NCH"])
+                outputData.append([i[0], i[1], i[2], "NCH", None])
             lastWorked[i[0] + i[2]] = i
+
 power_management()
+print(outputData)
+
+archiver = database.DatabaseArchiver('/tmp/BTStest.db')
+archiver.save_response(outputData)
+
 writeToTxt(outputData)
 #print(outputData)
