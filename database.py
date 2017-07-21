@@ -85,7 +85,7 @@ class DatabaseArchiver:
                 timestamp = datetime.datetime.now()
             c = self.connection.cursor()
             c.execute(
-                '''INSERT INTO measurements(direction, cell, mobile_station,
+                '''INSERT INTO responses(direction, cell, mobile_station,
                     command, step, time_stamp) VALUES (?, ?, ?, ?, ?, ?);''',
                 (response[self.R_DIRECTION], response[self.R_CELL],
                  response[self.R_MOBILE_STATION], response[self.R_COMMAND],
@@ -94,29 +94,3 @@ class DatabaseArchiver:
             )
         self.connection.commit()
 
-# archiver = DatabaseArchiver('/tmp/DB.db')
-#
-# data = [
-#     ['DL', 'S0', 'MS776', -66, 1],
-#     ['DL', 'S0', 'MS222', -76, 2],
-#     ['UL', 'S0', 'MS776', -78, 2],
-#     ['DL', 'S0', 'MS776', -63, 1],
-#     ['DL', 'S0', 'MS222', -73, 1],
-#     ['DL', 'N1', 'MS776', -79, None],
-#     ['DL', 'N2', 'MS776', -88, None],
-#     ['DL', 'N1', 'MS222', -91, None],
-#     ['DL', 'N3', 'MS222', -92, None],
-#     ['UL', 'S0', 'MS776', -75, 2],
-#     ['DL', 'S0', 'MS776', -60, 0],
-#     ['DL', 'S0', 'MS222', -77, 2],
-#     ['DL', 'N1', 'MS776', -89, None],
-#     ['DL', 'N2', 'MS776', -92, None],
-#     ['UL', 'S0', 'MS776', -70, 1],
-#     ['DL', 'N1', 'MS222', -94, None],
-#     ['DL', 'N3', 'MS222', -93, None],
-#     ['DL', 'S0', 'MS776', -61, 0],save_measurement
-#     ['UL', 'S0', 'MS776', -70, 1]
-# ]
-#
-# for d in data:
-#     archiver.save_measurement(d)

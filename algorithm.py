@@ -1,6 +1,7 @@
 from data_generator import random_data
 from input import read_file
 from SaveOutputTxt import writeToTxt
+import database
 
 '''data = [["DL", "S0", "MS776", -78, 1],\
  ["DL", "S0", "MS776", -82, 1],\
@@ -82,5 +83,10 @@ def power_management():
                 outputData.append([i[0], i[1], i[2], "NCH"])
 
 power_management()
+print(outputData)
+
+archiver = database.DatabaseArchiver('/tmp/BTStest.tb')
+archiver.save_response(outputData)
+
 writeToTxt(outputData)
 #print(outputData)
