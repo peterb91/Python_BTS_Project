@@ -1,6 +1,7 @@
 import sqlite3
 import datetime
 from algorithm import power_management
+from input import read_file
 
 class DatabaseArchiver:
     """Creates database and handles inserting data into the database."""
@@ -79,20 +80,22 @@ class DatabaseArchiver:
     def save_response(self, responses):
         """Saves calculated response into the database."""
         for response in responses:
-            try:
-                timestamp = response[self.R_TIME_STAMP]
-            except IndexError:
-                timestamp = datetime.datetime.now()
-            c = self.connection.cursor()
-            c.execute(
-                '''INSERT INTO responses(direction, cell, mobile_station,
-                    command, step, time_stamp) VALUES (?, ?, ?, ?, ?, ?);''',
-                (response[self.R_DIRECTION], response[self.R_CELL],
-                 response[self.R_MOBILE_STATION], response[self.R_COMMAND],
-                 response[self.R_STEP], timestamp
-                 )
-            )
-        self.connection.commit()
+            if len(response) > 5:
+                try:
+                    timestamp = response[self.R_TIME_STAMP]
+                except IndexError:
+                    timestamp = datetime.datetime.now()
+                c = self.connection.cursor()
+                c.execute(
+                    '''INSERT INTO responses(direction, cell, mobile_station,
+                        command, step, time_stamp) VALUES (?, ?, ?, ?, ?, ?);''',
+                    (response[self.R_DIRECTION], response[self.R_CELL],
+                     response[self.R_MOBILE_STATION], response[self.R_COMMAND],
+                     response[self.R_STEP], timestamp
+                     )
+                )
+            self.connection.commit()
 
-archiver = DatabaseArchiver('/tmp/BTStest.db')
+archiver = DatabaseArchiver('/tmp/BTS.db')
 archiver.save_response(power_management())
+archiver.save_measurement(read_file())
