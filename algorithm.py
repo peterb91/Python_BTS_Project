@@ -37,13 +37,13 @@ def avg(numbers):
 def power_management():
     """Changes list of read data into list of results calculating expected by power management for BTS requirements"""
     for i in data:
-        missed = False #Signal may come back, we check it later if its missed
-        if i[3] == 1000: #Given value (from readData from input.py) 1000 means that our signal is missing
+        missed = False  # Signal may come back, we check it later if its missed
+        if i[3] == 1000:  # Given value (from readData from input.py) 1000 means that our signal is missing
             missed = True
-            if i[0] in ["UL", "DL"] and i[1] == "S0" and i[4] is None: #Checks if values are proper
-                if i[0] + i[2] not in missings: #Adds missing signal if it wasn't in the
+            if i[0] in ["UL", "DL"] and i[1] == "S0" and i[4] is None:  # Checks if values are proper
+                if i[0] + i[2] not in missings:  # Adds missing signal if it wasn't in the
                     missings[i[0] + i[2]] = 1
-                elif missings[i[0] + i[2]] <= missing: #Increments number of missing signals before it reaches maximum
+                elif missings[i[0] + i[2]] <= missing:  # Increments number of missing signals before it reaches maximum
                     missings[i[0] + i[2]] += 1
                     i[3] = lastWorked[i[0] + i[2]]
                     i[4] = 5
@@ -51,11 +51,11 @@ def power_management():
                     i[3] = -95
                     i[4] = 5
         if(i[0] not in["UL", "DL"] or i[1] not in ["S0", "N1", "N2", "N3", "N4", "N5", "N6"] or i[3] < -95 or i[3] > -45\
-               or i[4] not in [0, 1, 2, 3, 4, 5]): #Checks data correctness, if wrong gives error code (0) into output
+               or i[4] not in [0, 1, 2, 3, 4, 5]):  # Checks data correctness, if wrong gives error code (0) into output
             outputData.append([0])
-        elif i[1] == "S0": #Seeks for expected terminal S0
+        elif i[1] == "S0":  # Seeks for expected terminal S0
             if not missed:
-                missings[i[0] + i[2]] = 0 #Resets missing counter if our signal came back
+                missings[i[0] + i[2]] = 0  # Resets missing counter if our signal came back
             inserted = False
             if i[0] + i[2] not in terminals:
                 terminals[i[0] + i[2]] = [i[3]]

@@ -2,7 +2,7 @@ import sqlite3
 import datetime
 from algorithm import power_management
 from input import read_file
-import time
+
 
 class DatabaseArchiver:
     """Creates database and handles inserting data into the database."""
