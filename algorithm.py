@@ -28,17 +28,17 @@ def avgQual(numbers):
     down = 0
     mul = 1
     for i in reversed(numbers):
-        #print("Number:", i)
+        print("Number:", i)
         up += i * mul
         down += mul
         mul /= 2
-    #print("avg:", up/down)
+    print("avg:", up/down)
     return up/down
 
 def avg(numbers):
     """Calculates weighted average and subtracts it from target SS"""
     result = avgQual(numbers)
-    #print("target - avg:", int(target-(up/down)))
+    print("target - avg:", int(target - result))
     return target - result
 
 
