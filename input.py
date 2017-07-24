@@ -1,16 +1,16 @@
-import sys
+# import sys
 # from config import read_config
 
 
 def read_file():
     """Function reads data from text file and store them in list"""
 
-    #config = read_config()
-    sep = " "
+    #  config = read_config()
+    sep = "  "
     data = []
 
-    #content = sys.stdin.readlines()
-    with open("dataset.txt", encoding = "utf-8") as file:
+    #  content = sys.stdin.readlines()
+    with open("input5.txt", encoding="utf-8") as file:
         content = file.readlines()
         for line in content:
             line = line.strip()
@@ -49,5 +49,3 @@ def read_file():
                 del l[5]
             data.append(l)
     return data
-
-read_file()
