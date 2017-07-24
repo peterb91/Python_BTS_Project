@@ -3,11 +3,11 @@ import sys
 
 def read_file():
 
-    sep = " "
+    sep = "  "
     data = []
 
     #content = sys.stdin.readlines()
-    with open("dataset.txt", encoding = "utf-8") as file:
+    with open("input5.txt", encoding = "utf-8") as file:
         content = file.readlines()
         for line in content:
             line = line.strip()
