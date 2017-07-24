@@ -1,6 +1,7 @@
 from data_generator import random_data
 from input import read_file
 from SaveOutputTxt import writeToTxt
+from config import read_config
 
 random_data(20000)
 data = read_file()
@@ -10,13 +11,14 @@ terminals = {}
 missings = {}
 lastWorked = {}
 
-target = -75
-hysteresis = 3
-maxInc = 8
-maxDec = 4
-values = 2
-missing = 3
-index = 0
+configs = read_config()
+
+target = configs[0]
+hysteresis = configs[1]
+maxInc = configs[2]
+maxDec = configs[3]
+values = configs[4]
+missing = configs[5]
 
 
 def avg(numbers):
