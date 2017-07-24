@@ -35,17 +35,10 @@ def avgQual(numbers):
     return up/down
 
 def avg(numbers):
-    """Calculates weighted average"""
-    up = 0
-    down = 0
-    mul = 1
-    for i in reversed(numbers):
-        #print("Number:", i)
-        up += i * mul
-        down += mul
-        mul /= 2
-    #print("avg:", int(target-(up/down)))
-    return int(target - (up/down))
+    """Calculates weighted average and subtracts it from target SS"""
+    result = avgQual(numbers)
+    #print("target - avg:", int(target-(up/down)))
+    return int(target - result)
 
 
 def power_management():
@@ -85,10 +78,13 @@ def power_management():
                 if len(terminals[i[0] + i[2]]) >= values:  # Checks if event is able to calculate
                     deviation = avg(terminals[i[0] + i[2]][-values:])
                     qual = avgQual(quality[i[0] + i[2]][-values:])
-                    if abs(deviation) > hysteresis and qual < 4:  # Checks if we should change signal normally
+                    if abs(deviation) >= 1 and qual < 4:  # Checks if we should change signal normally
                         if deviation < 0:  # Decrease signal
                             if qual < 2:  # Checks if we can decrease signal
-                                if abs(deviation) >= maxDec:
+                                if abs(deviation) < hysteresis:
+                                    outputData.append([i[0], i[1], i[2], "DEC", 1])
+                                    print(i[0], i[1], i[2], "DEC", 1)
+                                elif abs(deviation) >= maxDec:
                                     outputData.append([i[0], i[1], i[2], "DEC", maxDec])
                                     print(i[0], i[1], i[2], "DEC", maxDec)
                                 else:
@@ -98,13 +94,16 @@ def power_management():
                                 outputData.append([i[0], i[1], i[2], "NCH", None])
                                 print(i[0], i[1], i[2], "NCH")
                         elif deviation > 0:  # Increase signal
-                            if abs(deviation) >= maxInc:
+                            if abs(deviation) < hysteresis:
+                                outputData.append([i[0], i[1], i[2], "INC", 1])
+                                print(i[0], i[1], i[2], "INC", 1)
+                            elif abs(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
                                 print(i[0], i[1], i[2], "INC", maxInc)
                             else:
                                 outputData.append([i[0], i[1], i[2], "INC", deviation])
                                 print(i[0], i[1], i[2], "INC", deviation)
-                    elif abs(deviation) > hysteresis or qual >= 4:  # Very low quality (high value) means increase
+                    elif qual >= 4:  # Very low quality (high value) means increase
                         if abs(deviation) > 2:  # If more than minimum value we use normal algorithm
                             if abs(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
