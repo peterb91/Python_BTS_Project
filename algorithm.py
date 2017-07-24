@@ -58,55 +58,56 @@ def power_management():
                 missings[i[0] + i[2]] = 0  # Resets missing counter if our signal came back
             inserted = False
             if i[0] + i[2] not in terminals:
-                terminals[i[0] + i[2]] = [i[3]]
-                quality[i[0] + i[2]] = [i[4]]
+                terminals[i[0] + i[2]] = [i[3]]  # Adds new UL/DL terminals signals strength
+                quality[i[0] + i[2]] = [i[4]]  # and qualities into dictionary for later use
                 inserted = True
-                if values > 1:
+                if values > 1:  # Only if values to check is more than 1 we append No Change instruction
                     outputData.append([i[0], i[1], i[2], "NCH", None])
                     print(i[0], i[1], i[2], "NCH")
-            if not inserted or values == 1:
+            if not inserted or values == 1:  # Checks if event is able to calculate
                 if not inserted:
-                    terminals[i[0] + i[2]].append(i[3])
-                    quality[i[0] + i[2]].append(i[4])
-                if len(terminals[i[0] + i[2]]) >= values:
+                    terminals[i[0] + i[2]].append(i[3])  # If before weren't add signal strength
+                    quality[i[0] + i[2]].append(i[4])  # and quality into dictionary for later use
+                if len(terminals[i[0] + i[2]]) >= values:  # Checks if event is able to calculate
                     deviation = avg(terminals[i[0] + i[2]][-values:])
                     qual = avg(quality[i[0] + i[2]][-values:])
-                    if abs(deviation) > hysteresis and qual < 4:
-                        if deviation < 0:
-                            if abs(deviation) >= maxDec and qual < 2:
-                                outputData.append([i[0], i[1], i[2], "DEC", maxDec])
-                                print(i[0], i[1], i[2], "DEC", maxDec)
-                            elif qual < 2:
-                                outputData.append([i[0], i[1], i[2], "DEC", -deviation])
-                                print(i[0], i[1], i[2], "DEC", -deviation)
+                    if abs(deviation) > hysteresis and qual < 4:  # Checks if we should change signal normally
+                        if deviation < 0:  # Decrease signal
+                            if qual < 2:  # Checks if we can decrease signal
+                                if abs(deviation) >= maxDec:
+                                    outputData.append([i[0], i[1], i[2], "DEC", maxDec])
+                                    print(i[0], i[1], i[2], "DEC", maxDec)
+                                else:
+                                    outputData.append([i[0], i[1], i[2], "DEC", -deviation])
+                                    print(i[0], i[1], i[2], "DEC", -deviation)
                             else:
                                 outputData.append([i[0], i[1], i[2], "NCH", None])
                                 print(i[0], i[1], i[2], "NCH")
-                        elif deviation > 0:
+                        elif deviation > 0:  # Increase signal
                             if abs(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
                                 print(i[0], i[1], i[2], "INC", maxInc)
                             else:
                                 outputData.append([i[0], i[1], i[2], "INC", deviation])
                                 print(i[0], i[1], i[2], "INC", deviation)
-                    elif abs(deviation) > hysteresis or qual >= 4:
-                        if abs(deviation) > 2:
+                    elif abs(deviation) > hysteresis or qual >= 4:  # Very low quality (high value) means increase
+                        if abs(deviation) > 2:  # If more than minimum value we use normal algorithm
                             if abs(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
                                 print(i[0], i[1], i[2], "INC", maxInc)
                             else:
                                 outputData.append([i[0], i[1], i[2], "INC", deviation])
                                 print(i[0], i[1], i[2], "INC", deviation)
-                        else:
+                        else:  # If less we use minimum value (2)
                             outputData.append([i[0], i[1], i[2], "INC", 2])
                             print(i[0], i[1], i[2], "INC", 2)
-                    else:
+                    else:  # If deviation is less than given hysteresis there is no change to signal
                         outputData.append([i[0], i[1], i[2], "NCH", None])
                         print(i[0], i[1], i[2], "NCH")
-                else:
+                else:  # If there is not enough signals to calculate we don't send change command
                     outputData.append([i[0], i[1], i[2], "NCH", None])
                     print(i[0], i[1], i[2], "NCH")
-            lastWorked[i[0] + i[2]] = i[3]
+            lastWorked[i[0] + i[2]] = i[3]  # We add last working signal into dictionary in case of missing signal
     return outputData
 
 power_management()
