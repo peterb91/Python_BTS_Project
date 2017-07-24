@@ -28,18 +28,18 @@ def avgQual(numbers):
     down = 0
     mul = 1
     for i in reversed(numbers):
-        #print("Number:", i)
+        print("Number:", i)
         up += i * mul
         down += mul
         mul /= 2
-    #print("avg:", up/down)
+    print("avg:", up/down)
     return up/down
 
 def avg(numbers):
     """Calculates weighted average and subtracts it from target SS"""
     result = avgQual(numbers)
-    #print("target - avg:", int(target-(up/down)))
-    return int(target - result)
+    print("target - avg:", int(target - result))
+    return target - result
 
 
 def power_management():
@@ -89,8 +89,8 @@ def power_management():
                                     outputData.append([i[0], i[1], i[2], "DEC", maxDec])
                                     print(i[0], i[1], i[2], "DEC", maxDec)
                                 else:
-                                    outputData.append([i[0], i[1], i[2], "DEC", -deviation])
-                                    print(i[0], i[1], i[2], "DEC", -deviation)
+                                    outputData.append([i[0], i[1], i[2], "DEC", -int(round(deviation))])
+                                    print(i[0], i[1], i[2], "DEC", -int(round(deviation)))
                             else:
                                 outputData.append([i[0], i[1], i[2], "NCH", None])
                                 print(i[0], i[1], i[2], "NCH")
@@ -102,16 +102,16 @@ def power_management():
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
                                 print(i[0], i[1], i[2], "INC", maxInc)
                             else:
-                                outputData.append([i[0], i[1], i[2], "INC", deviation])
-                                print(i[0], i[1], i[2], "INC", deviation)
+                                outputData.append([i[0], i[1], i[2], "INC", int(round(deviation))])
+                                print(i[0], i[1], i[2], "INC", int(round(deviation)))
                     elif qual >= 4:  # Very low quality (high value) means increase
                         if abs(deviation) > 2:  # If more than minimum value we use normal algorithm
                             if abs(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
                                 print(i[0], i[1], i[2], "INC", maxInc)
                             else:
-                                outputData.append([i[0], i[1], i[2], "INC", deviation])
-                                print(i[0], i[1], i[2], "INC", deviation)
+                                outputData.append([i[0], i[1], i[2], "INC", int(round(deviation))])
+                                print(i[0], i[1], i[2], "INC", int(round(deviation)))
                         else:  # If less we use minimum value (2)
                             outputData.append([i[0], i[1], i[2], "INC", 2])
                             print(i[0], i[1], i[2], "INC", 2)
