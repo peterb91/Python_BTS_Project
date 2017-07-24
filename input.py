@@ -1,10 +1,11 @@
 import sys
+from config import read_config
 
 
 def read_file():
     """Function reads data from text file and store them in list"""
 
-    sep = "  "
+    sep = config[6]
     data = []
 
     #content = sys.stdin.readlines()
@@ -45,11 +46,7 @@ def read_file():
                 l.append(None)
             if len(l) > 5:
                 del l[5]
-            data.append(l),
-
-    #for i in data:
-        #print (i), "\n"
-
+            data.append(l)
     return data
 
 read_file()

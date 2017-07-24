@@ -1,9 +1,10 @@
 from data_generator import random_data
 from input import read_file
-from SaveOutputTxt import writeToTxt
+from save_output_txt import write_to_txt
 from config import read_config
 
-#random_data(20000)
+
+# random_data(20000)
 data = read_file()
 
 outputData = []
@@ -124,4 +125,4 @@ def power_management():
     return outputData
 
 power_management()
-writeToTxt(outputData)
+write_to_txt(outputData)

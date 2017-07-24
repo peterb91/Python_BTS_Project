@@ -1,5 +1,6 @@
 from input import read_file
 
+
 def input_charts():
     inData = read_file()
     msNames = []
