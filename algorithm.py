@@ -21,6 +21,18 @@ maxDec = configs[3]
 values = configs[4]
 missing = configs[5]
 
+def avgQual(numbers):
+    """Calculates weighted average"""
+    up = 0
+    down = 0
+    mul = 1
+    for i in reversed(numbers):
+        #print("Number:", i)
+        up += i * mul
+        down += mul
+        mul /= 2
+    #print("avg:", up/down)
+    return up/down
 
 def avg(numbers):
     """Calculates weighted average"""
@@ -28,9 +40,11 @@ def avg(numbers):
     down = 0
     mul = 1
     for i in reversed(numbers):
+        #print("Number:", i)
         up += i * mul
         down += mul
         mul /= 2
+    #print("avg:", int(target-(up/down)))
     return int(target - (up/down))
 
 
@@ -70,7 +84,7 @@ def power_management():
                     quality[i[0] + i[2]].append(i[4])  # and quality into dictionary for later use
                 if len(terminals[i[0] + i[2]]) >= values:  # Checks if event is able to calculate
                     deviation = avg(terminals[i[0] + i[2]][-values:])
-                    qual = avg(quality[i[0] + i[2]][-values:])
+                    qual = avgQual(quality[i[0] + i[2]][-values:])
                     if abs(deviation) > hysteresis and qual < 4:  # Checks if we should change signal normally
                         if deviation < 0:  # Decrease signal
                             if qual < 2:  # Checks if we can decrease signal

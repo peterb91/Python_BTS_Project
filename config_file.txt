@@ -1,7 +1,7 @@
 target = -75
 hysteresis = 3
-maxInc = 4
-maxDec = 8
+maxInc = 8
+maxDec = 4
 values = 4
-missing = 3
+missing = 1
 sep = "  "
