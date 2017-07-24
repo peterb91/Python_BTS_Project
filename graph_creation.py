@@ -1,10 +1,10 @@
 import subprocess
-''' to run this function you have to have installed Gnuplot and Python 2
-    update lines 20 and 21 ('data1' and 'data2' with file name according to terminal name you want to see on graph'''
+"""to run this function you have to have installed Gnuplot and Python 2
+    update lines 20 and 21 ('data1' and 'data2' with file name according to terminal name you want to see on graph"""
 
 
 def graph_creation():
-    proc = subprocess.Popen(["gnuplot","-p"],
+    proc = subprocess.Popen(["gnuplot", "-p"],
                             shell=True,
                             stdin=subprocess.PIPE,
                             )

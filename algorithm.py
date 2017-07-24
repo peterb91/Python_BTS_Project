@@ -22,23 +22,25 @@ maxDec = configs[3]
 values = configs[4]
 missing = configs[5]
 
+
 def avgQual(numbers):
     """Calculates weighted average"""
     up = 0
     down = 0
     mul = 1
     for i in reversed(numbers):
-        #print("Number:", i)
+        #  print("Number:", i)
         up += i * mul
         down += mul
         mul /= 2
-    #print("avg:", up/down)
+    #  print("avg:", up/down)
     return up/down
+
 
 def avg(numbers):
     """Calculates weighted average and subtracts it from target SS"""
     result = avgQual(numbers)
-    #print("target - avg:", int(target - result))
+    #  print("target - avg:", int(target - result))
     return target - result
 
 
@@ -58,8 +60,8 @@ def power_management():
                 else:
                     i[3] = -95
                     i[4] = 5
-        if(i[0] not in["UL", "DL"] or i[1] not in ["S0", "N1", "N2", "N3", "N4", "N5", "N6"] or i[3] < -95 or i[3] > -45\
-               or i[4] not in [0, 1, 2, 3, 4, 5]):  # Checks data correctness, if wrong gives error code (0) into output
+        if(i[0] not in["UL", "DL"] or i[1] not in ["S0", "N1", "N2", "N3", "N4", "N5", "N6"] or i[3] < -95 or i[3] > -45
+           or i[4] not in [0, 1, 2, 3, 4, 5]):  # Checks data correctness, if wrong gives error code (0) into output
             outputData.append([0])
         elif i[1] == "S0":  # Seeks for expected terminal S0
             if not missed:

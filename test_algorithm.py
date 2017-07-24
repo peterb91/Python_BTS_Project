@@ -2,9 +2,9 @@ import unittest
 from algorithm import avg
 from algorithm import power_management
 
+
 class AlgorithmTestCase(unittest.TestCase):
     """Test for 'algorithm.py'."""
-
 
     def test_average_of_numbers_sequence(self):
         """Test for function calculating average of numbers sequence"""

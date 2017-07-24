@@ -71,8 +71,8 @@ class DatabaseArchiver:
                 timestamp = datetime.datetime.now()
             nrecords += 1
             values.extend([measurement[self.M_DIRECTION], measurement[self.M_CELL],
-                 measurement[self.M_MOBILE_STATION], measurement[self.M_SIGNAL_STRENGTH],
-                 measurement[self.M_SIGNAL_QUALITY], timestamp])
+                           measurement[self.M_MOBILE_STATION], measurement[self.M_SIGNAL_STRENGTH],
+                           measurement[self.M_SIGNAL_QUALITY], timestamp])
             if nrecords > 30:
                 self.connection.execute(
                     '''INSERT INTO measurements(direction, cell, mobile_station,
