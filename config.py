@@ -19,6 +19,7 @@ def read_config():
                     config.append(l[2])
                 else:
                     config.append(int(l[2]))
+    print(config)
     return config
 
 read_config()

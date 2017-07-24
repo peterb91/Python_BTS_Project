@@ -1,11 +1,12 @@
 import sys
-from config import read_config
+#from config import read_config
 
 
 def read_file():
     """Function reads data from text file and store them in list"""
-    config = read_config()
-    sep = config[6]
+
+    #config = read_config()
+    sep = "  "
     data = []
 
     #content = sys.stdin.readlines()
