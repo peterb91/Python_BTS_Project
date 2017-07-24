@@ -7,7 +7,7 @@ def read_file():
     data = []
 
     #content = sys.stdin.readlines()
-    with open("dataset.txt") as file:
+    with open("dataset.txt", encoding = "utf-8") as file:
         content = file.readlines()
         for line in content:
             line = line.strip()
@@ -44,8 +44,8 @@ def read_file():
                 del l[5]
             data.append(l),
 
-    for i in data:
-        print (i), "\n"
+    #for i in data:
+        #print (i), "\n"
 
     return data
 
