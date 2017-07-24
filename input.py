@@ -22,7 +22,9 @@ def read_file():
                     l[i] = 1000
                 elif l[i] == '' and i != 3:
                     l[i] = None
-            if l[3] == "missing":
+            if l[3] == 1000 or l[3] == "1000":
+                l[3] = 9999
+            elif l[3] == "missing":
                 l[3] = 1000
             try:
                 if l[1] != "S0" and l[3] != 1000:
