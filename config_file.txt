@@ -4,3 +4,4 @@ maxInc = 4
 maxDec = 8
 values = 4
 missing = 3
+sep = "  "

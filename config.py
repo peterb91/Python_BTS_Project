@@ -1,14 +1,14 @@
 def read_config():
     """Function reads configuration settings in configuration text file and store them in list"""
 
-    sep = " "
+    separator = " "
     config = []
 
     with open("config_file.txt") as file:
         content = file.readlines()
         for line in content:
             line = line.strip()
-            l = line.split(sep)
+            l = line.split(separator)
             if len(l) < 3:
                 l.append("")
                 l[2] = None
