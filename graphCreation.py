@@ -3,7 +3,7 @@ import subprocess
     update lines 20 and 21 ('data1' and 'data2' with file name according to terminal name you want to see on graph'''
 
 
-def graphCreation():
+def graph_creation():
     proc = subprocess.Popen(["gnuplot","-p"],
                             shell=True,
                             stdin=subprocess.PIPE,

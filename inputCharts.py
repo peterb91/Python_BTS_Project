@@ -1,6 +1,6 @@
 from input import read_file
 
-def inputCharts():
+def input_charts():
     inData = read_file()
     msNames = []
     timestamp=0
