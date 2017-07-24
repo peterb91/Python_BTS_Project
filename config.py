@@ -13,7 +13,7 @@ def read_config():
                 config.append(l[2])
             else:
                 if l[2] == "":
-                    l[2] = None;
+                    l[2] = None
                     config.append(l[2])
                 else:
                     config.append(int(l[2]))

@@ -3,7 +3,7 @@ from input import read_file
 from SaveOutputTxt import writeToTxt
 from config import read_config
 
-random_data(20000)
+#random_data(20000)
 data = read_file()
 
 outputData = []
@@ -53,7 +53,14 @@ def power_management():
         elif i[1] == "S0":
             if not missed:
                 missings[i[0] + i[2]] = 0
-            if i[0] + i[2] in terminals:
+            inserted = False
+            if i[0] + i[2] not in terminals:
+                terminals[i[0] + i[2]] = [i[3]]
+                inserted = True
+                if hysteresis > 1:
+                    outputData.append([i[0], i[1], i[2], "NCH", None])
+                    print(i[0], i[1], i[2], "NCH")
+            elif not inserted or hysteresis < 1:
                 terminals[i[0] + i[2]].append(i[3])
                 if len(terminals[i[0] + i[2]]) >= values:
                     deviation = avg(terminals[i[0] + i[2]][-values:])
@@ -61,30 +68,38 @@ def power_management():
                         if deviation < 0:
                             if abs(deviation) >= maxDec and i[4] < 2:
                                 outputData.append([i[0], i[1], i[2], "DEC", maxDec])
+                                print(i[0], i[1], i[2], "DEC", maxDec)
                             elif i[4] < 2:
                                 outputData.append([i[0], i[1], i[2], "DEC", -deviation])
+                                print(i[0], i[1], i[2], "DEC", -deviation)
                             else:
                                 outputData.append([i[0], i[1], i[2], "NCH", None])
+                                print(i[0], i[1], i[2], "NCH")
                         elif deviation > 0:
                             if abs(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
+                                print(i[0], i[1], i[2], "INC", maxInc)
                             else:
                                 outputData.append([i[0], i[1], i[2], "INC", deviation])
+                                print(i[0], i[1], i[2], "INC", deviation)
                     elif abs(deviation) > hysteresis and i[4] >= 4:
                         if deviation > 2:
                             if abs(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
+                                print(i[0], i[1], i[2], "INC", maxInc)
                             else:
                                 outputData.append([i[0], i[1], i[2], "INC", deviation])
+                                print(i[0], i[1], i[2], "INC", deviation)
                         else:
                             outputData.append([i[0], i[1], i[2], "INC", 2])
+                            print(i[0], i[1], i[2], "INC", 2)
                     else:
                         outputData.append([i[0], i[1], i[2], "NCH", None])
+                        print(i[0], i[1], i[2], "NCH")
                 else:
                     outputData.append([i[0], i[1], i[2], "NCH", None])
-            else:
-                terminals[i[0] + i[2]] = [i[3]]
-                outputData.append([i[0], i[1], i[2], "NCH", None])
+                    print(i[0], i[1], i[2], "NCH")
+
             lastWorked[i[0] + i[2]] = i[3]
     return outputData
 
