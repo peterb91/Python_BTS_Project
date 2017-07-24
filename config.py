@@ -1,4 +1,6 @@
 def read_config():
+    """Function reads configuration settings in configuration text file and store them in list"""
+
     sep = " "
     config = []
 
