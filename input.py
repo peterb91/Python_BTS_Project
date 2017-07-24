@@ -2,6 +2,7 @@ import sys
 
 
 def read_file():
+
     sep = " "
     data = []
 
@@ -11,7 +12,9 @@ def read_file():
         for line in content:
             line = line.strip()
             l = line.split(sep)
-            if len(l) < 4:
+            if len(l) > 5:
+                del l[5:]
+            elif len(l) < 4:
                 add = [None for i in range(4 - len(l))]
                 l = l + add
             for i in range(len(l)):
@@ -21,16 +24,26 @@ def read_file():
                     l[i] = None
             if l[3] == "missing":
                 l[3] = 1000
-            if l[1] != "S0" and l[3] != 1000:
-                l[3] = int(l[3])
+            try:
+                if l[1] != "S0" and l[3] != 1000:
+                    l[3] = int(l[3])
+                    l.append(None)
+            except ValueError:
+                l[3] = 9999
                 l.append(None)
-            elif l[1] == "S0" and l[3] != 1000:
-                l[3] = int(l[3])
-                l[4] = int(l[4])
-            elif l[3] == 1000:
+            try:
+                if l[1] == "S0" and l[3] != 1000:
+                    l[3] = int(l[3])
+                    l[4] = int(l[4])
+            except ValueError:
+                l[3] = 9999
+                l[4] = 9999
+            if l[3] == 1000:
                 l.append(None)
-
             data.append(l),
+    #for i in data:
+        #print (i), "\n"
+
     return data
 
 read_file()
