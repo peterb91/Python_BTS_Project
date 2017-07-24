@@ -1,5 +1,5 @@
 import sys
-#from config import read_config
+# from config import read_config
 
 
 def read_file():
