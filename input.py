@@ -2,6 +2,7 @@ import sys
 
 
 def read_file():
+    """Function reads data from text file and store them in list"""
 
     sep = "  "
     data = []
