@@ -29,13 +29,8 @@ def read_file():
                 l[4] = int(l[4])
             elif l[3] == 1000:
                 l.append(None)
-<<<<<<< HEAD
-            data.append(l)
-        print(l)
-=======
+
             data.append(l),
-        #for i in data:
-            #print (i), "\n"
->>>>>>> b86f56119b5957535f131512f16936105362b6bc
     return data
+
 read_file()
