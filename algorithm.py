@@ -3,7 +3,7 @@ from input import read_file
 from SaveOutputTxt import writeToTxt
 from config import read_config
 
-random_data(20000)
+#random_data(20000)
 data = read_file()
 
 outputData = []
@@ -53,7 +53,14 @@ def power_management():
         elif i[1] == "S0":
             if not missed:
                 missings[i[0] + i[2]] = 0
-            if i[0] + i[2] in terminals:
+            inserted = False
+            if i[0] + i[2] not in terminals:
+                terminals[i[0] + i[2]] = [i[3]]
+                inserted = True
+                if hysteresis > 1:
+                    outputData.append([i[0], i[1], i[2], "NCH", None])
+                    print(i[0], i[1], i[2], "NCH")
+            elif not inserted or hysteresis < 1:
                 terminals[i[0] + i[2]].append(i[3])
                 if len(terminals[i[0] + i[2]]) >= values:
                     deviation = avg(terminals[i[0] + i[2]][-values:])
@@ -92,11 +99,7 @@ def power_management():
                 else:
                     outputData.append([i[0], i[1], i[2], "NCH", None])
                     print(i[0], i[1], i[2], "NCH")
-            else:
-                terminals[i[0] + i[2]] = [i[3]]
-                if hysteresis > 1:
-                    outputData.append([i[0], i[1], i[2], "NCH", None])
-                    print(i[0], i[1], i[2], "NCH")
+
             lastWorked[i[0] + i[2]] = i[3]
     return outputData
 

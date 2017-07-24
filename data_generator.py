@@ -19,4 +19,3 @@ def random_data (amount):
                 col5 = ""
             file.write("%s %s %s %s %s\n" %(col1, col2, col3, col4, col5))
 
-random_data(1000)
