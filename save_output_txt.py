@@ -1,4 +1,4 @@
-def writeToTxt(A):
+def write_to_txt(A):
     B = []
     for i in range(len(A)):
         if A[i][0] != 0:

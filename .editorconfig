@@ -14,7 +14,7 @@ end_of_line = lf
 charset = utf-8
 
 [*.py]
-max_line_length = 79
+max_line_length = 120
 
 # Use 2 spaces for the HTML files
 [*.html]
