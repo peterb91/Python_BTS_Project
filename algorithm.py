@@ -28,17 +28,17 @@ def avgQual(numbers):
     down = 0
     mul = 1
     for i in reversed(numbers):
-        print("Number:", i)
+        #print("Number:", i)
         up += i * mul
         down += mul
         mul /= 2
-    print("avg:", up/down)
+    #print("avg:", up/down)
     return up/down
 
 def avg(numbers):
     """Calculates weighted average and subtracts it from target SS"""
     result = avgQual(numbers)
-    print("target - avg:", int(target - result))
+    #print("target - avg:", int(target - result))
     return target - result
 
 
@@ -51,7 +51,7 @@ def power_management():
             if i[0] in ["UL", "DL"] and i[1] == "S0" and i[4] is None:  # Checks if values are proper
                 if i[0] + i[2] not in missings:  # Adds missing signal if it wasn't in the
                     missings[i[0] + i[2]] = 1
-                elif missings[i[0] + i[2]] <= missing:  # Increments number of missing signals before it reaches maximum
+                elif missings[i[0] + i[2]] < missing:  # Increments number of missing signals before it reaches maximum
                     missings[i[0] + i[2]] += 1
                     i[3] = lastWorked[i[0] + i[2]]
                     i[4] = 5
