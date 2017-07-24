@@ -14,3 +14,4 @@ __pycache__
 
 
 *.txt
+!config_file.txt
