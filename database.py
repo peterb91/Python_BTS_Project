@@ -2,6 +2,7 @@ import sqlite3
 import datetime
 from algorithm import power_management
 from input import read_file
+import time
 
 class DatabaseArchiver:
     """Creates database and handles inserting data into the database."""
@@ -61,19 +62,32 @@ class DatabaseArchiver:
 
     def save_measurement(self, measurements):
         """Saves measurements into the database."""
+        values = []
+        nrecords = 0
         for measurement in measurements:
             try:
                 timestamp = measurement[self.M_TIME_STAMP]
             except IndexError:
                 timestamp = datetime.datetime.now()
-            c = self.connection.cursor()
-            c.execute(
-                '''INSERT INTO measurements(direction, cell, mobile_station,
-                    signal_strength, signal_quality, time_stamp) VALUES (?, ?, ?, ?, ?, ?);''',
-                (measurement[self.M_DIRECTION], measurement[self.M_CELL],
+            nrecords += 1
+            values.extend([measurement[self.M_DIRECTION], measurement[self.M_CELL],
                  measurement[self.M_MOBILE_STATION], measurement[self.M_SIGNAL_STRENGTH],
-                 measurement[self.M_SIGNAL_QUALITY], timestamp
-                 )
+                 measurement[self.M_SIGNAL_QUALITY], timestamp])
+            if nrecords > 30:
+                self.connection.execute(
+                    '''INSERT INTO measurements(direction, cell, mobile_station,
+                        signal_strength, signal_quality, time_stamp) VALUES {}'''.format(
+                        ', '.join(['(?, ?, ?, ?, ?, ?)'] * nrecords)),
+                    values
+                )
+                values.clear()
+                nrecords = 0
+        if nrecords > 0:
+            self.connection.execute(
+                '''INSERT INTO measurements(direction, cell, mobile_station,
+                    signal_strength, signal_quality, time_stamp) VALUES {}'''.format(
+                    ', '.join(['(?, ?, ?, ?, ?, ?)'] * nrecords)),
+                values
             )
         self.connection.commit()
 
@@ -85,8 +99,7 @@ class DatabaseArchiver:
                     timestamp = response[self.R_TIME_STAMP]
                 except IndexError:
                     timestamp = datetime.datetime.now()
-                c = self.connection.cursor()
-                c.execute(
+                self.connection.execute(
                     '''INSERT INTO responses(direction, cell, mobile_station,
                         command, step, time_stamp) VALUES (?, ?, ?, ?, ?, ?);''',
                     (response[self.R_DIRECTION], response[self.R_CELL],
@@ -94,7 +107,7 @@ class DatabaseArchiver:
                      response[self.R_STEP], timestamp
                      )
                 )
-            self.connection.commit()
+        self.connection.commit()
 
 archiver = DatabaseArchiver('/tmp/BTS.db')
 archiver.save_response(power_management())

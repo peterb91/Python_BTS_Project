@@ -10,7 +10,9 @@ ENV/
 
 *.pyc
 __pycache__
+__pycache__/
 *.egg-info
 
 
 *.txt
+!config_file.txt
