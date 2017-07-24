@@ -84,7 +84,7 @@ def power_management():
                                 outputData.append([i[0], i[1], i[2], "INC", deviation])
                                 print(i[0], i[1], i[2], "INC", deviation)
                     elif abs(deviation) > hysteresis or i[4] == 5:
-                        if deviation > 2:
+                        if abs(deviation) > 2:
                             if abs(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
                                 print(i[0], i[1], i[2], "INC", maxInc)
