@@ -4,7 +4,7 @@ from config import read_config
 
 def read_file():
     """Function reads data from text file and store them in list"""
-
+    config = read_config()
     sep = config[6]
     data = []
 
