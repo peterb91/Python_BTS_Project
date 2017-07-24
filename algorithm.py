@@ -12,6 +12,7 @@ terminals = {}
 missings = {}
 quality = {}
 lastWorked = {}
+lastNeighbour = {}
 
 configs = read_config()
 
@@ -22,7 +23,8 @@ maxDec = configs[3]
 values = configs[4]
 missing = configs[5]
 
-def avgQual(numbers):
+
+def avg_qual(numbers):
     """Calculates weighted average"""
     up = 0
     down = 0
@@ -35,9 +37,10 @@ def avgQual(numbers):
     #print("avg:", up/down)
     return up/down
 
+
 def avg(numbers):
     """Calculates weighted average and subtracts it from target SS"""
-    result = avgQual(numbers)
+    result = avg_qual(numbers)
     #print("target - avg:", int(target - result))
     return target - result
 
@@ -78,7 +81,10 @@ def power_management():
                     quality[i[0] + i[2]].append(i[4])  # and quality into dictionary for later use
                 if len(terminals[i[0] + i[2]]) >= values:  # Checks if event is able to calculate
                     deviation = avg(terminals[i[0] + i[2]][-values:])
-                    qual = avgQual(quality[i[0] + i[2]][-values:])
+                    qual = avg_qual(quality[i[0] + i[2]][-values:])
+                    if i[0] + i[2] in lastNeighbour:
+                        if lastNeighbour[i[0] + i[2]] < int(round(avg_qual(terminals[i[0] + i[2]][-values:]))):
+                            print(lastNeighbour[i[0] + i[2]])
                     if abs(deviation) >= 1 and qual < 4:  # Checks if we should change signal normally
                         if deviation < 0:  # Decrease signal
                             if qual < 2:  # Checks if we can decrease signal
@@ -122,6 +128,9 @@ def power_management():
                     outputData.append([i[0], i[1], i[2], "NCH", None])
                     print(i[0], i[1], i[2], "NCH")
             lastWorked[i[0] + i[2]] = i[3]  # We add last working signal into dictionary in case of missing signal
+        elif i[0] == "DL":
+            print("KUPA")
+            lastNeighbour[i[0] + i[2]] = (i[0], i[1], i[2], "HOBC")
     return outputData
 
 power_management()
