@@ -1,8 +1,8 @@
 from input import read_file
 
 
-def input_charts():
-    in_data = read_file()
+def input_charts(content):
+    in_data = content
     ms_names = []
     timestamp = 0
     # add timestamp to dataset

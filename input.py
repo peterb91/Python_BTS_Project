@@ -8,8 +8,8 @@ def read_file(content):
     sep = " "
     data = []
 
-    # with open("dataset.txt", encoding="utf-8") as file:
-    #    content = file.readlines()
+    with open("dataset.txt", encoding="utf-8") as file:
+        content = file.readlines()
     for line in content:
         line = line.strip()
         l = line.split(sep)
