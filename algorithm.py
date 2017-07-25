@@ -6,7 +6,6 @@ from os import write
 
 
 #  random_data(50000)
-data = read_file()
 
 outputData = []
 terminals = {}
@@ -46,7 +45,7 @@ def avg(numbers):
     return target - result
 
 
-def power_management():
+def power_management(data):
     """Changes list of read data into list of results calculating expected by power management for BTS requirements"""
     for i in data:
         missed = False  # Signal may come back, we check it later if its missed

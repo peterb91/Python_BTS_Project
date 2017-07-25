@@ -4,8 +4,9 @@ from input import read_file
 import sys
 
 content = sys.stdin.readlines()
+data = read_file(content)
 
 archiver = DatabaseArchiver('/tmp/BTS.db')
-archiver.save_response(power_management())
-archiver.save_measurement(read_file())
+archiver.save_measurement(data)
+archiver.save_response(power_management(data))
 
