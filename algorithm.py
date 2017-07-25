@@ -130,9 +130,8 @@ def power_management():
                     write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  NCH\n").encode("utf-8"))
             lastWorked[i[0] + i[2]] = i[3]  # We add last working signal into dictionary in case of missing signal
         if i[0] == "DL" and i[1] in ["N1", "N2", "N3", "N4", "N5", "N6"]:
-            #print("KUPA")
             lastNeighbour[i[0] + i[2]] = (i[0], i[1], i[2], "HOBC", i[3])
     return outputData
 
-power_management()
+#power_management()
 write_to_txt(outputData)
