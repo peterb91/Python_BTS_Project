@@ -5,7 +5,7 @@ from config import read_config
 from os import write
 
 
-#random_data(500000)
+#  random_data(50000)
 data = read_file()
 
 outputData = []
@@ -83,9 +83,9 @@ def power_management():
                 if len(terminals[i[0] + i[2]]) >= values:  # Checks if event is able to calculate
                     deviation = avg(terminals[i[0] + i[2]][-values:])
                     qual = avg_qual(quality[i[0] + i[2]][-values:])
-                    '''if i[0] + i[2] in lastNeighbour:
-                        if lastNeighbour[i[0] + i[2]] < int(round(avg_qual(terminals[i[0] + i[2]][-values:]))):
-                            print(lastNeighbour[i[0] + i[2]])'''
+                    if i[0] + i[2] in lastNeighbour:
+                        if lastNeighbour[i[0] + i[2]][4] < int(round(avg_qual(terminals[i[0] + i[2]][-values:]))):
+                            print("  ".join(lastNeighbour[i[0] + i[2]][0:4]))
                     if abs(deviation) >= 1 and qual < 4:  # Checks if we should change signal normally
                         if deviation < 0:  # Decrease signal
                             if qual < 2:  # Checks if we can decrease signal
@@ -112,9 +112,6 @@ def power_management():
                                 outputData.append([i[0], i[1], i[2], "INC", int(round(deviation))])
                                 write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  " + str(int(round(deviation))) + "\n").encode("utf-8"))
                     elif qual >= 4:  # Very low quality (high value) means increase
-                        #if abs(deviation) > 2:  # If more than minimum value we use normal algorithm
-                            #if abs(deviation) >= maxInc:
-                        # TU CHYBA BLAD A ALGORYTMIE PIOTRA!
                         if deviation > 2:  # If more than minimum value we use normal algorithm
                             if deviation >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
@@ -132,9 +129,9 @@ def power_management():
                     outputData.append([i[0], i[1], i[2], "NCH", None])
                     write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  NCH\n").encode("utf-8"))
             lastWorked[i[0] + i[2]] = i[3]  # We add last working signal into dictionary in case of missing signal
-        '''elif i[0] == "DL":
-            print("KUPA")
-            lastNeighbour[i[0] + i[2]] = (i[0], i[1], i[2], "HOBC")'''
+        if i[0] == "DL" and i[1] in ["N1", "N2", "N3", "N4", "N5", "N6"]:
+            #print("KUPA")
+            lastNeighbour[i[0] + i[2]] = (i[0], i[1], i[2], "HOBC", i[3])
     return outputData
 
 power_management()
