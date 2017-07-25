@@ -1,11 +1,5 @@
-from data_generator import random_data
-from input import read_file
-from save_output_txt import write_to_txt
 from config import read_config
 from os import write
-
-
-#  random_data(50000)
 
 outputData = []
 terminals = {}
@@ -30,18 +24,15 @@ def avg_qual(numbers):
     down = 0
     mul = 1
     for i in reversed(numbers):
-        #  print("Number:", i)
         up += i * mul
         down += mul
         mul /= 2
-    #  print("avg:", up/down)
     return up/down
 
 
 def avg(numbers):
     """Calculates weighted average and subtracts it from target SS"""
     result = avg_qual(numbers)
-    #  print("target - avg:", int(target - result))
     return target - result
 
 
@@ -90,10 +81,12 @@ def power_management(data):
                                     write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  DEC  1\n").encode("utf-8"))
                                 elif abs(deviation) >= maxDec:
                                     outputData.append([i[0], i[1], i[2], "DEC", maxDec])
-                                    write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  DEC  " + str(maxDec) + "\n").encode("utf-8"))
+                                    write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  DEC  " +\
+                                              str(maxDec) + "\n").encode("utf-8"))
                                 else:
                                     outputData.append([i[0], i[1], i[2], "DEC", -int(round(deviation))])
-                                    write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  DEC  " + str(-int(round(deviation))) + "\n").encode("utf-8"))
+                                    write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  DEC  " +\
+                                              str(-int(round(deviation))) + "\n").encode("utf-8"))
                             else:
                                 outputData.append([i[0], i[1], i[2], "NCH", None])
                                 write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  NCH\n").encode("utf-8"))
@@ -103,18 +96,22 @@ def power_management(data):
                                 write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  1\n").encode("utf-8"))
                             elif abs(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
-                                write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  " + str(maxInc) + "\n").encode("utf-8"))
+                                write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  " + str(maxInc) +\
+                                          "\n").encode("utf-8"))
                             else:
                                 outputData.append([i[0], i[1], i[2], "INC", int(round(deviation))])
-                                write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  " + str(int(round(deviation))) + "\n").encode("utf-8"))
+                                write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  " + str(int(round(deviation))) +\
+                                          "\n").encode("utf-8"))
                     elif qual >= 4:  # Very low quality (high value) means increase
-                        if deviation > 2:  # If more than minimum value we use normal algorithm
-                            if deviation >= maxInc:
+                        if int(deviation) > 2:  # If more than minimum value we use normal algorithm
+                            if int(deviation) >= maxInc:
                                 outputData.append([i[0], i[1], i[2], "INC", maxInc])
-                                write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  " + str(maxInc) + "\n").encode("utf-8"))
+                                write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  " +\
+                                          str(maxInc) + "\n").encode("utf-8"))
                             else:
                                 outputData.append([i[0], i[1], i[2], "INC", int(round(deviation))])
-                                write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  " + str(int(round(deviation))) + "\n").encode("utf-8"))
+                                write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  " +\
+                                          str(int(round(deviation))) + "\n").encode("utf-8"))
                         else:  # If less we use minimum value (2)
                             outputData.append([i[0], i[1], i[2], "INC", 2])
                             write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  INC  2" + "\n").encode("utf-8"))
@@ -129,12 +126,7 @@ def power_management(data):
                                 mini = int(lastNeighbour[i[0]+i[2]][a])
                                 neigh = a
                         if mini > 3 + int(round(avg_qual(terminals[i[0] + i[2]][-values:]))):
-                            write(1, ("N: " + str(lastNeighbour[i[0] + i[2]]) + "\n").encode("utf-8"))
-                            #write(1, ("Minimum: " + str(mini) + "\n").encode("utf-8"))
-                            #print("Neighbor =", str(mini) + "terminal =",
-                             #     str(round(avg_qual(terminals[i[0] + i[2]][-values:]))))
                             write(1, (i[0] + "  " + neigh + "  " + i[2] + "  HOBC\n").encode("utf-8"))
-                            lastNeighbour[i[0] + i[2]].update({neigh: -95})
                 else:  # If there is not enough signals to calculate we don't send change command
                     outputData.append([i[0], i[1], i[2], "NCH", None])
                     write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  NCH\n").encode("utf-8"))
@@ -145,7 +137,6 @@ def power_management(data):
                 else:
                     lastNeighbour[i[0] + i[2]] = ({i[1]: i[3]})
                 if i[0] + i[2] in terminals:
-                    #write(1, ("Gówno2N: " + str(lastNeighbour[i[0] + i[2]]) + "\n").encode("utf-8"))
                     if len(terminals[i[0] + i[2]]) >= values:
                         mini = list(lastNeighbour[i[0] + i[2]].values())[0]
                         neigh = list(lastNeighbour[i[0] + i[2]].keys())[0]
@@ -154,10 +145,5 @@ def power_management(data):
                                 mini = int(lastNeighbour[i[0] + i[2]][a])
                                 neigh = a
                         if mini > 3 + int(round(avg_qual(terminals[i[0] + i[2]][-values:]))):
-                            write(1, ("N: " + str(lastNeighbour[i[0] + i[2]]) + "\n").encode("utf-8"))
-                            #write(1, ("MinimumN: " + str(mini) + "\n").encode("utf-8"))
-                            #print("Neighbor =", str(mini) + "terminal =",
-                             #     str(round(avg_qual(terminals[i[0] + i[2]][-values:]))))
                             write(1, (i[0] + "  " + neigh + "  " + i[2] + "  HOBC\n").encode("utf-8"))
-                            #lastNeighbour[i[0] + i[2]].update({neigh: -95})
     return outputData

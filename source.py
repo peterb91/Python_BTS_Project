@@ -7,12 +7,10 @@ from input_charts import input_charts
 from config import read_config
 import sys
 
-#content = sys.stdin.readlines()
-content = ""
+content = sys.stdin.readlines()
 data = read_file(content)
 output = power_management(data)
 config = read_config()
-print(config)
 
 if config[6] == 0:
     archiver = DatabaseArchiver('/tmp/BTS.db')

@@ -1,15 +1,9 @@
-# from config import read_config
 
 
 def read_file(content):
     """Function reads data from text file and store them in list"""
-
-    #  config = read_config()
     sep = " "
     data = []
-
-    with open("dataset.txt", encoding="utf-8") as file:
-        content = file.readlines()
     for line in content:
         line = line.strip()
         l = line.split(sep)
