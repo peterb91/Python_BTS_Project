@@ -1,7 +1,5 @@
 import sqlite3
 import datetime
-from algorithm import power_management
-from input import read_file
 
 
 class DatabaseArchiver:
@@ -108,7 +106,3 @@ class DatabaseArchiver:
                      )
                 )
         self.connection.commit()
-
-archiver = DatabaseArchiver('/tmp/BTS.db')
-archiver.save_response(power_management())
-archiver.save_measurement(read_file())
