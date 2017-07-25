@@ -20,5 +20,3 @@ def read_config():
                 else:
                     config.append(int(l[2]))
     return config
-
-read_config()

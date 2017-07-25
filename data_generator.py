@@ -3,7 +3,6 @@ import random
 
 def random_data(amount):
     """Function generates pseudo random data for input"""
-
     with open("dataset.txt", "w+") as file:
         links = ["UL", "UL", "UL", "UL", "DL", "DL", "DL", "DL", "SL"]
         terminals = ["S0", "S0", "S0", "S0", "S0", "S0", "S0", "N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "S1"]

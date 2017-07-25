@@ -7,7 +7,6 @@ def write_to_txt(a):
     for i in range(len(a)):
         if a[i][0] != 0:
             b.append(a[i])
-
     # find unique MS names
     output_f_names = []
     for i in range(len(b)):
@@ -27,4 +26,4 @@ def write_to_txt(a):
                     else:
                         f.write(" ".join(str(item) for item in b[i]))
                         f.write("\n")
-    logs.logger.info("Finishing writting output to txt files\n")
+    logs.logger.info("Finishing writing output to txt files\n")
