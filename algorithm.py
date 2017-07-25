@@ -84,8 +84,14 @@ def power_management():
                     deviation = avg(terminals[i[0] + i[2]][-values:])
                     qual = avg_qual(quality[i[0] + i[2]][-values:])
                     if i[0] + i[2] in lastNeighbour:
-                        if lastNeighbour[i[0] + i[2]][4] < int(round(avg_qual(terminals[i[0] + i[2]][-values:]))):
-                            print("  ".join(lastNeighbour[i[0] + i[2]][0:4]))
+                        mini = 1000000
+                        neigh = ''
+                        for a in lastNeighbour[i[0] + i[2]]:
+                            if abs(int(target - lastNeighbour[i[0]+i[2]][a])) < mini:
+                                mini = int(abs(target - lastNeighbour[i[0]+i[2]][a]))
+                                neigh = a
+                        if mini + 3 < int(round(abs(avg(terminals[i[0] + i[2]][-values:])))):
+                            write(1, (i[0] + "  " + neigh + "  " + i[2] + "  HOBC\n").encode("utf-8"))
                     if abs(deviation) >= 1 and qual < 4:  # Checks if we should change signal normally
                         if deviation < 0:  # Decrease signal
                             if qual < 2:  # Checks if we can decrease signal
@@ -130,7 +136,11 @@ def power_management():
                     write(1, (i[0] + "  " + i[1] + "  " + i[2] + "  NCH\n").encode("utf-8"))
             lastWorked[i[0] + i[2]] = i[3]  # We add last working signal into dictionary in case of missing signal
         if i[0] == "DL" and i[1] in ["N1", "N2", "N3", "N4", "N5", "N6"]:
-            lastNeighbour[i[0] + i[2]] = (i[0], i[1], i[2], "HOBC", i[3])
+                if i[0] + i[2] in lastNeighbour.keys():
+                    lastNeighbour[i[0] + i[2]].update({i[1]: i[3]})
+                else:
+                    lastNeighbour[i[0] + i[2]] = ({i[1]: i[3]})
+
     return outputData
 
 #power_management()
