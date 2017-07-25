@@ -88,9 +88,9 @@ def power_management():
                         neigh = ''
                         for a in lastNeighbour[i[0] + i[2]]:
                             if abs(int(target - lastNeighbour[i[0]+i[2]][a])) < mini:
-                                mini = int(abs(target - lastNeighbour[i[0]+i[2]][a]))
+                                mini = int(abs(lastNeighbour[i[0]+i[2]][a]))
                                 neigh = a
-                        if mini + 3 < int(round(abs(avg(terminals[i[0] + i[2]][-values:])))):
+                        if mini + 3 < int(round(abs(avg_qual(terminals[i[0] + i[2]][-values:])))):
                             write(1, (i[0] + "  " + neigh + "  " + i[2] + "  HOBC\n").encode("utf-8"))
                     if abs(deviation) >= 1 and qual < 4:  # Checks if we should change signal normally
                         if deviation < 0:  # Decrease signal

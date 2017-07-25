@@ -94,7 +94,6 @@ class DatabaseArchiver:
     def save_response(self, responses):
         """Saves calculated response into the database."""
         for response in responses:
-            print(response)
             if len(response) > 4:
                 try:
                     timestamp = response[self.R_TIME_STAMP]
