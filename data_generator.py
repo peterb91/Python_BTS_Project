@@ -19,4 +19,6 @@ def random_data(amount):
                 col5 = random.randint(1, 5)
             else:
                 col5 = ""
-            file.write("%s %s %s %s %s\n" % (col1, col2, col3, col4, col5))
+            file.write("%s  %s  %s  %s  %s\n" % (col1, col2, col3, col4, col5))
+
+
