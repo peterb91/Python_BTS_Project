@@ -1,0 +1,6 @@
+target = -75
+hysteresis = 3
+maxInc = 8
+maxDec = 4
+values = 4
+missing = 1
