@@ -159,6 +159,5 @@ def power_management(data):
                             #print("Neighbor =", str(mini) + "terminal =",
                              #     str(round(avg_qual(terminals[i[0] + i[2]][-values:]))))
                             write(1, (i[0] + "  " + neigh + "  " + i[2] + "  HOBC\n").encode("utf-8"))
-                            lastNeighbour[i[0] + i[2]].update({neigh: -95})
-
+                            #lastNeighbour[i[0] + i[2]].update({neigh: -95})
     return outputData
